@@ -1,0 +1,19 @@
+{
+    "id": "casual",
+    "nome": "Linha Casual",
+    "preco": 29.90,
+    "estoque": 15,
+    "img": "./api/produtos/casual/casual.jpg",
+    "avaliacoes": [
+        {
+            "nome": "Leonardo",
+            "estrelas": 5,
+            "descricao": "Gostei muito do produto, atendeu aos requisitos que eu queria."
+        },
+        {
+            "nome": "Lucas",
+            "estrelas": 4,
+            "descricao": "Muito bom o produto mas poderia ser mais barato."
+        }
+    ]
+}

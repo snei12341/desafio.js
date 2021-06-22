@@ -1,0 +1,19 @@
+{
+    "id": "acessorios",
+    "nome": "Acessórios",
+    "preco": 19.90,
+    "estoque": 12,
+    "img": "./api/produtos/acessorios/acessorios.jpg",
+    "avaliacoes": [
+        {
+            "nome": "Leonardo",
+            "estrelas": 5,
+            "descricao": "Gostei muito do produto, atendeu aos requisitos que eu queria."
+        },
+        {
+            "nome": "Lucas",
+            "estrelas": 4,
+            "descricao": "Muito bom o produto mas poderia ser mais barato."
+        }
+    ]
+}

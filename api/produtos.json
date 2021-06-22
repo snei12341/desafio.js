@@ -1,0 +1,20 @@
+[
+    {
+        "id": "acessorios",
+        "nome": "Acessórios",
+        "preco": 19.90,
+        "img": "./api/produtos/acessorios/acessorios.jpg"
+    },
+    {
+        "id": "casual",
+        "nome": "Linha Casual",
+        "preco": 29.90,
+        "img": "./api/produtos/casual/casual.jpg"
+    },
+    {
+        "id": "uniformes",
+        "nome": "Uniformes",
+        "preco": 39.90,
+        "img": "./api/produtos/uniformes/uniformes.jpg"
+    }
+]

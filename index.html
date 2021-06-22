@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
-    <link rel="icon" type="imagem/png" href="./icon/imperator.png" />
+    <script src="./vue.min.js"></script>
+    <link rel="icon" type="imagem/png" href="./icon/imperator.png"/>
 
     <title>ImPerator Store</title>
 
@@ -15,80 +16,119 @@
     <div class="superinfo-bg">
         <div class="superinfo">
             <p>Seg / Sex - 08:00 às 18:00</p>
-            <a href="tel:+5519999999999">+55 19 999999999</a>
+            <a href="tel:+5519999999999">+55 19 999999999 ☎</a>
             <p>Av. Aqui Perto, 123, Rio Claro - SP</p>
         </div>
     </div>
 
-    <header class="menu-bg">
-        <div class="menu">
-            <div class="menu-logo">
-                <a href="#">ImPerator Store</a>
+    <div id="app">
+
+        <header class="menu-bg">
+            <div class="menu">
+                <div class="menu-logo">
+                    <a href="#">ImPerator Store</a>
+                </div>
+                <nav class="menu-nav">
+                    <ul>
+                        <li><a href="#acessorios">Acessórios</a></li>
+                        <li><a href="#casual">Casual</a></li>
+                        <li><a href="#uniformes">Uniformes</a></li>
+                    </ul>
+                </nav>
+                <form class="menu-form">
+                    <input type="text" placeholder="Buscar produto">
+                    <button type="submit">Buscar</button>
+                </form>
+                <div class="carrinho_menu" @click="carrinhoAtivo = true"> {{carrinhoTotal | numeroPreco}} | {{carrinho.length}}</div>
             </div>
-            <nav class="menu-nav">
-                <ul>
-                    <li><a href="#acessorios">Acessórios</a></li>
-                    <li><a href="#casual">Casual</a></li>
-                    <li><a href="#uniformes">Uniformes</a></li>
-                </ul>
-            </nav>
-            <form class="menu-form">
-                <input type="text" placeholder="Buscar produto">
-                <button type="submit">Buscar</button>
+        </header>
+
+        <section class="banner">
+            <img src="./img/banner-principal.png">
+        </section>
+
+        <section class="produtos">
+            <div v-for="item in produtos" @click="abrirModal(item.id)" :key="item.id" class="produto">
+                <img :src="item.img" :alt="item.nome" class="produto_img" />
+                <div class="produto_info">
+                    <span class="produto_preco">{{item.preco | numeroPreco}}</span>
+                    <h2 class="produto_titulo">{{item.nome}}</h2>
+                </div>
+            </div>
+        </section>
+
+        <section class="modal" v-if="produto" @click="fecharModal">
+            <div class="modal_container">
+                <div class="modal_img">
+                    <img :src="produto.img" :alt="produto.nome"></img>
+                </div>
+                <div class="modal_dados">
+                    <button @click="produto = false" class="modal_fechar">X</button>
+                    <span class="modal_preco">{{produto.preco | numeroPreco}}</span>
+                    <h2 class="modal_titulo">{{produto.nome}}</h2>
+                    <p>{{produto.descricao}}</p>
+                    <button v-if="produto.estoque > 0" class="modal_btn" @click="adicionarItem">Adicionar Item</button>
+                    <button v-else class="modal_btn esgotado" disabled>Produto Esgotado</button>
+                </div>
+                <div class="avaliacoes">
+                    <h2 class="avaliacoes_subtitulo">Avaliações</h2>
+                    <ul>
+                        <li v-for="avaliacao in produto.avaliacoes" class="avaliacao">
+                            <p class="avaliacao_descricao">{{avaliacao.descricao}} </p>
+                            <p class="avaliacao_usuario">{{avaliacao.nome}} | {{avaliacao.estrelas}} estrelas </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="carrinho_modal" :class="{ativo: carrinhoAtivo}" @click="clickForaCarrinho">
+            <div class="carrinho_container">
+                <button class="carrinho_fechar" @click="carrinhoAtivo = false">X</button>
+                <h2 class="carrinho_titulo">Carrinho</h2>
+                <div v-if="carrinho.length > 0">
+                    <ul class="carrinho_lista">
+                        <li v-for="(item, index) in carrinho" class="carrinho_item">
+                            <p>{{item.nome}}</p>
+                            <p class="carrinho_preco">{{item.preco | numeroPreco}}</p>
+                            <button class="carrinho_remover" @click="removerItem(index)">X</button>
+                        </li>
+                    </ul>
+                    <p class="carrinho_total">{{carrinhoTotal | numeroPreco}}</p>
+                    <button class="carrinho_finalizar">Finalizar Compra</button>
+                </div>
+                <p v-else>O carrinho está vazio.</p>
+            </div>
+        </section>
+
+        <div class="alerta" :class="{ativo: alertaAtivo}">
+            <p class="alerta_mensagem">{{mensagemAlerta}}</p>
+        </div>
+
+            <section class="novidades">
+            <div class="novidades-info">
+                <h1>Novidades</h1>
+                <p>assine aqui e fique sabendo das novidades!</p>
+            </div>
+            <form class="novidades-form">
+                <input type="text" placeholder="Seu e-mail">
+                <button type="submit">Assinar</button>
             </form>
-            <div>
-                <a href="#"><img src="./icon/carrinho.jpg"></a>
+            <div class="social">
+                <a href="#"><img src="./icon/facebook.png"></a>
+                <a href="#"><img src="./icon/instagram.png"></a>
+                <a href="#"><img src="./icon/twitter.png"></a>
             </div>
-        </div>
-    </header>
+        </section>
 
-    <section class="banner">
-        <img src="./img/banner-principal.png">
-    </section>
-
-    <section class="preco" id="preco">
-        <h1></h1>
-        <div class="produtos-container">
-            <div class="produtos-item casual">
-                <h2>Acessórios</h2>
-                <span><sup>R$</sup>19,90</span>
-                <img src="./img/acessorios-2.webp " alt="Produtos 1">
-                <a href="#">Comprar</a>
-            </div>
-            <div class="produtos-item acessorios">
-                <h2>Linha Casual</h2>
-                <span><sup>R$</sup>29,90</span>
-                <img src="./img/casual-homem.jpg" onmouseout="this.src='./img/casual-homem.jpg';" onmouseover="this.src='./img/casual-mulher.jpg';"alt="Produtos 2"/>
-                <a href="#">Comprar</a>
-            </div>
-            <div class="produtos-item uniformes">
-                <h2>Uniformes</h2>
-                <span><sup>R$</sup>39,90</span>
-                <img src="./img/acessorios.jpg" alt="Produtos 3">
-                <a href="#">Comprar</a>
-            </div>
-        </div>    
-    </section>
-
-    <section class="novidades">
-        <div class="novidades-info">
-            <h1>Novidades</h1>
-            <p>assine aqui e fique sabendo das novidades!</p>
-        </div>
-        <form class="novidades-form">
-            <input type="text" placeholder="Seu e-mail">
-            <button type="submit">Assinar</button>
-        </form>
-        <div class="social">
-            <a href="#"><img src="./icon/facebook.png"></a>
-            <a href="#"><img src="./icon/instagram.png"></a>
-            <a href="#"><img src="./icon/twitter.png"></a>
-        </div>
-    </section>
+    </div>
 
     <footer class="footer">
         <p>ImPerator © Todos os direitos reservados.</p>
     </footer>
+
+
+    <script src="./app.js"></script>
 
 </body>
 </html>
