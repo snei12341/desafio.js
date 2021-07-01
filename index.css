@@ -186,6 +186,10 @@ img {
   display: block;
 }
 
+.banner img {
+  margin: 0 auto;
+}
+
 /* LISTA PRODUTOS */
 
 .produtos {
@@ -203,7 +207,10 @@ img {
 
 .produto_img {
   max-width: 1560px;
-  margin-right: 40px;
+}
+
+.produto_info {
+  margin-left: 30px;
 }
 
 .produto_titulo {
